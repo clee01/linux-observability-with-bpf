@@ -9,7 +9,7 @@ static const char *file_path = "/sys/fs/bpf/my_array";
 int main(int argc, char **argv) {
   int fd, key, value, result;
 
-  fd = bpf_obj_get(file_path);
+  fd = bpf_obj_get(file_path);  // 从文件系统中加载映射
   if (fd < 0) {
     printf("Failed to fetch the map: %d (%s)\n", fd, strerror(errno));
     return -1;
