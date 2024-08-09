@@ -1,7 +1,7 @@
 from bcc import BPF
 
 bpf_source = """
-BPF_HASH(cache, u64, u64);
+BPF_HASH(cache, u64, u64);  // 创建BPF哈希映射，允许在uprobe和uretprobe函数之间共享数据
 
 int trace_start_time(struct pt_regs *ctx) {
   u64 pid = bpf_get_current_pid_tgid();
