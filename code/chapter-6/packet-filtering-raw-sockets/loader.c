@@ -27,10 +27,10 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  sock = open_raw_sock("lo");
+  sock = open_raw_sock("lo");  // 打开环回接口lo
 
   if (setsockopt(sock, SOL_SOCKET, SO_ATTACH_BPF, prog_fd,
-                 sizeof(prog_fd[0]))) {
+                 sizeof(prog_fd[0]))) {  // 设置SO_ATTACH_BPF选项将BPF程序附加到接口lo打开的原始套接字上
     printf("setsockopt %s\n", strerror(errno));
     return 0;
   }

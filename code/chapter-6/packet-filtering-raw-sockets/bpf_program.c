@@ -31,7 +31,7 @@ static void *(*bpf_map_lookup_elem)(struct bpf_map_def *map, void *key) =
 unsigned long long load_byte(void *skb,
                              unsigned long long off) asm("llvm.bpf.load.byte");
 
-struct bpf_map_def SEC("maps") countmap = {
+struct bpf_map_def SEC("maps") countmap = {  // 协议作为映射的键，数据包的数量作为映射的值
     .type = BPF_MAP_TYPE_ARRAY,
     .key_size = sizeof(int),
     .value_size = sizeof(int),
@@ -40,7 +40,7 @@ struct bpf_map_def SEC("maps") countmap = {
 
 SEC("socket")
 int socket_prog(struct __sk_buff *skb) {
-  int proto = load_byte(skb, ETH_HLEN + offsetof(struct iphdr, protocol));
+  int proto = load_byte(skb, ETH_HLEN + offsetof(struct iphdr, protocol));  // 获取协议信息
   int one = 1;
   int *el = bpf_map_lookup_elem(&countmap, &proto);
   if (el) {
